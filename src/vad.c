@@ -42,6 +42,7 @@ Features compute_features(const float *x, int N) {
    * For the moment, compute random value between 0 and 1 
    */
   Features feat;
+  //asigna un valor aleatorio
   feat.zcr = feat.p = feat.am = (float) rand()/RAND_MAX;
   return feat;
 }
@@ -87,11 +88,18 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
   Features f = compute_features(x, vad_data->frame_length);
   vad_data->last_feature = f.p; /* save feature, in case you want to show */
 
+  //Switch: va a tomar una decisión en función del estado en el que estaba
+  //Criterio: 
   switch (vad_data->state) {
+  //Estado inicial -> servirá para ver cual es la potencia de ruido
+  //Desde la primera trama ya estaremos en silencio
   case ST_INIT:
     vad_data->state = ST_SILENCE;
     break;
-
+  //Lo que más info nos da es la potencia
+  //Característica: silencio tiene menos potencia que voz
+  //f.p --> feature (de potencia)
+  //Si f.p es mayor que 0.95, decido que lo que tengo es potencia
   case ST_SILENCE:
     if (f.p > 0.95)
       vad_data->state = ST_VOICE;

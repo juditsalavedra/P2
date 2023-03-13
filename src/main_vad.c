@@ -38,6 +38,7 @@ int main(int argc, char *argv[]) {
     return -1;
   }
 
+  //abrimos con sfopen: tendremos que instalar esta librería
   /* Open input sound file */
   if ((sndfile_in = sf_open(input_wav, SFM_READ, &sf_info)) == 0) {
     fprintf(stderr, "Error opening input file %s (%s)\n", input_wav, strerror(errno));
@@ -50,6 +51,7 @@ int main(int argc, char *argv[]) {
   }
 
   /* Open vad file */
+  //Donde vamos a escribir
   if ((vadfile = fopen(output_vad, "wt")) == 0) {
     fprintf(stderr, "Error opening output vad file %s (%s)\n", output_vad, strerror(errno));
     return -1;
@@ -63,6 +65,7 @@ int main(int argc, char *argv[]) {
     }
   }
 
+  //Vamos a almacenar info tipo fm, tamaño trama, etc y en qué estado estamos en cada una de las tramas
   vad_data = vad_open(sf_info.samplerate);
   /* Allocate memory for buffers */
   frame_size   = vad_frame_size(vad_data);
@@ -81,14 +84,17 @@ int main(int argc, char *argv[]) {
       /* TODO: copy all the samples into sndfile_out */
     }
 
+    //Determianmos estado actual del autómata
     state = vad(vad_data, buffer);
     if (verbose & DEBUG_VAD) vad_show_state(vad_data, stdout);
 
     /* TODO: print only SILENCE and VOICE labels */
     /* As it is, it prints UNDEF segments but is should be merge to the proper value */
+    //Sabemos que el segemento anterior era voz o silencio pk hay un cambio de estado
     if (state != last_state) {
-      if (t != last_t)
+      if (t != last_t){
         fprintf(vadfile, "%.5f\t%.5f\t%s\n", last_t * frame_duration, t * frame_duration, state2str(last_state));
+      }
       last_state = state;
       last_t = t;
     }
