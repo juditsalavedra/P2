@@ -135,6 +135,41 @@ Ejercicios
 - Etiquete manualmente los segmentos de voz y silencio del fichero grabado al efecto. Inserte, a 
   continuación, una captura de `wavesurfer` en la que se vea con claridad la señal temporal, el contorno de
   potencia y la tasa de cruces por cero, junto con el etiquetado manual de los segmentos.
+  
+  Para la realización de esta práctica, hemos grabado un nuevo fichero .wav, cuyo nombre es pav_2352.wav. Abrimos 
+  el fichero en la aplicación ***wavesurfer*** y comprobamos que se trata de una señal mono (1 único canal) y con 
+  frecuencia de muestreo de 16 kHz:
+  
+  &nbsp; &nbsp; <img width="242" alt="image" src="https://user-images.githubusercontent.com/127085765/225718076-a729dafe-165f-49e3-906d-2ccd843fe126.png">
+
+
+  Primero realizamos el etiquetado manual de los segmentos para indicar cuáles se corresponden a segmentos de voz (V)
+  y cuáles a segmentos de silencio (S):
+  
+  &nbsp; &nbsp; <img width="956" alt="image" src="https://user-images.githubusercontent.com/127085765/225719597-dce0f121-e065-43f2-ac6d-a9f9f265a954.png">
+  
+  Hay que tener en cuenta que se han considerado como silencios aquellos que tienen una cierta duración (no pausas cortas).
+  
+  
+  Usamos el programa implementado en la práctica 1 ***p1*** para obtener los parámetros estadísticos que necesitamos de la señal grabada.
+  Como se muestra en la siguiente captura, guardamos la potencia de la señal en un fichero llamado *pav_2352.pot* y la tasa de cruces por cero 
+  en el fichero *pav_2352.zcr*. Tenemos en cuenta que al ejecutar **p1**, la salida está compuesta por 4 columnas. La potencia se encuentra en la 
+  segunda columna, mientras que el ZCR se encuentra en la cuarta columna. Los comandos usados son:
+  
+  &nbsp; &nbsp; <img width="654" alt="image" src="https://user-images.githubusercontent.com/127085765/225710248-08487746-441e-4adc-8b3f-2d6fa233c002.png">
+  
+  
+  Ahora añadimos los paneles necesarios para poder ver el contorno de la potencia de la señal y la tasa de cruces por cero (ZCR). En la siguiente 
+  captura de pantalla se muestran los siguientes paneles:
+  	1. Señal temporal
+	2. Panel *transcription* con etiquetas para determinar los segmentos de voz y los de silencio
+	3. Potencia de la señal obtenida por ***wavesurfer***
+	4. Potencia de la señal obtenida con el programa de la práctica 1 *p1*
+	5. Tasa de cruces por cero obtenida con el programa de la práctica 1 *p1
+  
+  &nbsp; &nbsp; <img width="946" alt="image" src="https://user-images.githubusercontent.com/127085765/225719436-07b9aace-d8d0-4c10-b18f-ef6d84f5076e.png">
+
+
 
 
 - A la vista de la gráfica, indique qué valores considera adecuados para las magnitudes siguientes:
