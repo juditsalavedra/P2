@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "vad.h"
+#include "pav_analysis.h"
 
 const float FRAME_TIME = 10.0F; /* in ms. */
 
@@ -26,6 +27,8 @@ typedef struct {
   float p;
   float am;
 } Features;
+//tasa de cruces por cero no aporta mucho
+//Lo que aporta más es la potencia
 
 /* 
  * TODO: Delete and use your own features!
@@ -42,8 +45,9 @@ Features compute_features(const float *x, int N) {
    * For the moment, compute random value between 0 and 1 
    */
   Features feat;
-  //asigna un valor aleatorio
-  feat.zcr = feat.p = feat.am = (float) rand()/RAND_MAX;
+  //asigna un valor aleatorio 
+  //feat.zcr = feat.p = feat.am = (float) rand()/RAND_MAX;
+  feat.p = compute_power(x, N);
   return feat;
 }
 
@@ -101,12 +105,12 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
   //f.p --> feature (de potencia)
   //Si f.p es mayor que 0.95, decido que lo que tengo es potencia
   case ST_SILENCE:
-    if (f.p > 0.95)
+    if (f.p > -40)
       vad_data->state = ST_VOICE;
     break;
 
   case ST_VOICE:
-    if (f.p < 0.01)
+    if (f.p < -40)
       vad_data->state = ST_SILENCE;
     break;
 
