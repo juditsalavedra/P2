@@ -182,7 +182,7 @@ Ejercicios
 	* Duración mínima razonable de los segmentos de voz y silencio.
 	
 	  Utilizando el comando "cat" observamos los siguientes segmentos de voz y silencio:
-	  &nbsp; &nbsp; <img width="200" alt="image" src="(https://user-images.githubusercontent.com/125377500/226129493-e00437de-1406-4ed5-85dd-18c49f518cc7.png)">
+&nbsp; &nbsp; <img width="200" alt="image" src="(https://user-images.githubusercontent.com/125377500/226129493-e00437de-1406-4ed5-85dd-18c49f518cc7.png)">
 	  
 	  La duración de los segmentos de voz y silencio se puede calcular haciendo la diferencia entre el instante final y el inicial. En nuestro audio, los segmentos 	  de silencio son bastante largos, por lo que consideraremos razonables silencios de 0.5 segundos, duración inferior al mínimo valor obtenido (0.672 segundos).
 	  Por otro lado, la duración mínima razonable de los segmentos de voz consideramos que es 0.3, que es un poco inferior al mínimo observado (0.372 segundos).
