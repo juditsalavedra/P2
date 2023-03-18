@@ -176,8 +176,15 @@ Ejercicios
 
 	* Incremento del nivel potencia en dB, respecto al nivel correspondiente al silencio inicial, para
 	  estar seguros de que un segmento de señal se corresponde con voz.
+	  
+	  &nbsp; &nbsp; <img width="956" alt="image" src="https://user-images.githubusercontent.com/.png">
+	  
+	  
+	  
 
 	* Duración mínima razonable de los segmentos de voz y silencio.
+	
+	La duración mínima razonable de los segmentos de silencio consideramos que es 
 
 	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
 
