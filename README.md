@@ -177,7 +177,7 @@ Ejercicios
 	* Incremento del nivel potencia en dB, respecto al nivel correspondiente al silencio inicial, para
 	  estar seguros de que un segmento de señal se corresponde con voz.
 	  
-	  &nbsp; &nbsp; <img width="956" alt="image" src="https://user-images.githubusercontent.com/125377500/226127522-bd3975fd-c99d-45bd-babd-365d4e2ff1d7.png">
+	  &nbsp; &nbsp; <img width="200" alt="image" src="https://user-images.githubusercontent.com/125377500/226127522-bd3975fd-c99d-45bd-babd-365d4e2ff1d7.png">
 	  
 	  
 	  
