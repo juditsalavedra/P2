@@ -163,9 +163,9 @@ Ejercicios
   captura de pantalla se muestran los siguientes paneles:
   	1. Señal temporal
 	2. Panel *transcription* con etiquetas para determinar los segmentos de voz y los de silencio
-	3. Potencia de la señal obtenida por ***wavesurfer***
+	3. Potencia de la señal obtenida por ***wavesurfer*** (usando ventana de Hamming de 320 puntos)
 	4. Potencia de la señal obtenida con el programa de la práctica 1 *p1*
-	5. Tasa de cruces por cero obtenida con el programa de la práctica 1 *p1
+	5. Tasa de cruces por cero obtenida con el programa de la práctica 1 *p1*
   
   &nbsp; &nbsp; <img width="946" alt="image" src="https://user-images.githubusercontent.com/127085765/225719436-07b9aace-d8d0-4c10-b18f-ef6d84f5076e.png">
 
@@ -177,21 +177,45 @@ Ejercicios
 	* Incremento del nivel potencia en dB, respecto al nivel correspondiente al silencio inicial, para
 	  estar seguros de que un segmento de señal se corresponde con voz.
 	  
-	  En la gráfica de la potencia se aprecia que el valor de voz posterior a un silencio (20-25 dB) es de aproximadamente 70dB. Por otro lado, si nos fijamos en 		la gráfica obtenida con el programa de P1, vemos que el valor posterior a un silencio (de unos -50 dB) es de aproximadamente -5dB. Decidimos que el 		  incremento del nivel de potencia adecuado para considerar que hay un cambio de silencio a voz es 45dB.
+	 En la gráfica en la que se representa la potencia de la señal de voz obtenida por ***wavesurfer*** se aprecia que el valor de voz posterior a un 
+	 silencio (25-40dB) es de aproximadamente 60-80dB. Por otro lado, si nos fijamos en la gráfica obtenida con el programa de P1, vemos que el valor 
+	 posterior a un silencio (entre -45dB y -55dB) es de aproximadamente -5dB o -10dB. Decidimos que el incremento del nivel de potencia adecuado para
+	 considerar que hay un cambio de silencio a voz es 15dB, aunque depende de la situación, se puede considerar un incremento inferior respecto del 
+	 nivel de silencio como 10 dB, ya que hay situaciones en las que es peor detectar silencio cuando es voz que al contrario.
 	  
-	  (Las gráficas se han analizado más detalladamente con wavesurfer, por lo que los valores no son exactamente los de la imagen incluida en este documento).
+	 Las gráficas se han analizado más detalladamente con wavesurfer, por lo que los valores se ven con más precisión que en la imagen incluida en el
+	 apartado anterior. Por ejemplo, en la siguiente captura podemos ver mejor el nivel del silencio:
+	  
+   &nbsp; &nbsp; <img width="955" alt="image" src="https://user-images.githubusercontent.com/127085765/229853097-de3b5e5c-5ba2-4fda-a1cd-41bfa9a96cac.png">
 
-	* Duración mínima razonable de los segmentos de voz y silencio.
+
+   * Duración mínima razonable de los segmentos de voz y silencio.
 	
-	  Utilizando el comando "cat" observamos los siguientes segmentos de voz y silencio:<br>
+     Utilizando el comando "cat" observamos los siguientes segmentos de voz y silencio:<br>
+
 &nbsp; &nbsp; <img width="400" alt="image" src="https://user-images.githubusercontent.com/125377500/226129493-e00437de-1406-4ed5-85dd-18c49f518cc7.png">
 	  
-	  La duración de los segmentos de voz y silencio se puede calcular haciendo la diferencia entre el instante final y el inicial. En nuestro audio, los segmentos 	  de silencio son bastante largos, por lo que consideraremos razonables silencios de 0.5 segundos, duración inferior al mínimo valor obtenido con nuestra 	    grabación (0.672 segundos).
-	  Por otro lado, la duración mínima razonable de los segmentos de voz consideramos que es 0.3, que es un poco inferior al mínimo observado (0.372 segundos).
+     La duración de los segmentos de voz y silencio se puede calcular haciendo la diferencia entre el instante final y el inicial. 
+     En nuestro audio, los segmentos de silencio son bastante largos, por lo que consideraremos razonables silencios de 0.5 segundos,
+     duración inferior al mínimo valor obtenido con nuestra grabación (0.672 segundos). Por otro lado, consideraremos que la duración
+     mínima razonable de los segmentos de voz es 0.3s, que es un poco inferior al mínimo observado (0.372 segundos).
 	  
 
-	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
-	   Se observa que la tasa de cruces por cero no es una medida muy precisa para determinar la presencia de sonido o voz. Las señales con una alta tasa de cruces 	   por cero suelen tener una mayor presencia de silencios. Sin embargo, algunos sonidos sordos producen valores altos en la gráfica de ZCR. Escuchando el audio 	   y mirando nuestra gráfica se comprueba que los picos se corresponden con la letra "s".
+   * ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
+   
+     Sabemos que la tasa de cruces por cero nos da información acerca del sonido. Cuando el sonido es sonoro el ZCR tiene valores muy bajos, mientras que 
+     en el caso de sonidos sordos, el ZCR aumenta. Aún así, hay que tener en cuenta que no todos los sonidos sordos tienen una tasa de cruces por cero elevada.
+     Se observa que la tasa de cruces por cero no es una medida muy precisa para determinar la presencia de sonido o voz. Las señales con una alta tasa de
+     cruces por cero suelen tener una mayor presencia de silencios. Sin embargo, algunos sonidos sordos como la **t** o la **s** sproducen valores altos en 
+     la gráfica de ZCR. Escuchando el audio (dice: *Hola, soy Teresa, y mi hermana me ha pedido que grabe un audio para la clase de pav*) y mirando nuestra
+     gráfica se comprueba que los picos más significativos se corresponden con la letra "s" (consonante fricativa):
+	  	1. Pico en intervalo 2,31s : 2,41s -> se corresponde con la 's' de la palabra '***s****oy*'
+		2. Pico en intervalo 2,85s : 2,95s -> se corresponde con la 's' de la palabra '*Tere***s***a*'
+		3. Pico en intervalo 3,5s : 3,7s   -> silencio (se oye un ruido de fondo)
+		4. Pico en intervalo 6,3s : 6,4s   -> se corresponde con la 's' de la palabra '*cla***s***e*'
+     
+     Vemos que las consonantes sordas como la '***p***' y la '***t***' no tienen un ZCR elevado.
+		
 
 ### Desarrollo del detector de actividad vocal
 
