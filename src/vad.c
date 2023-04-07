@@ -6,6 +6,9 @@
 #include "pav_analysis.h"
 
 const float FRAME_TIME = 10.0F; /* in ms. */
+const float N = 40;
+const float fm = 16000;
+int n = 0;
 
 /* 
  * As the output state is only ST_VOICE, ST_SILENCE, or ST_UNDEF,
@@ -14,7 +17,7 @@ const float FRAME_TIME = 10.0F; /* in ms. */
  */
 
 const char *state_str[] = {
-  "UNDEF", "S", "V", "INIT"
+  "UNDEF", "S", "V", "INIT", "MV", "MS"
 };
 
 const char *state2str(VAD_STATE st) {
@@ -48,6 +51,8 @@ Features compute_features(const float *x, int N) {
   //asigna un valor aleatorio 
   //feat.zcr = feat.p = feat.am = (float) rand()/RAND_MAX;
   feat.p = compute_power(x, N);
+  feat.zcr = compute_zcr(x, N, fm);
+  feat.am = compute_am(x, N);
   return feat;
 }
 
@@ -55,11 +60,18 @@ Features compute_features(const float *x, int N) {
  * TODO: Init the values of vad_data
  */
 
-VAD_DATA * vad_open(float rate) {
+VAD_DATA * vad_open(float rate, float alpha0, float alpha1) {
   VAD_DATA *vad_data = malloc(sizeof(VAD_DATA));
   vad_data->state = ST_INIT;
   vad_data->sampling_rate = rate;
   vad_data->frame_length = rate * FRAME_TIME * 1e-3;
+  vad_data->alpha0=alpha0;
+  vad_data->alpha1= alpha1;
+  vad_data->k0 = -100;
+  vad_data->k1 = 0;
+  vad_data->k2 = 0;
+  vad_data->time = 0;
+  vad_data->last_feature = 0;
   return vad_data;
 }
 
@@ -90,33 +102,68 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
    */
 
   Features f = compute_features(x, vad_data->frame_length);
-  vad_data->last_feature = f.p; /* save feature, in case you want to show */
+  //vad_data->last_feature = f.p; /* save feature, in case you want to show */
 
   //Switch: va a tomar una decisión en función del estado en el que estaba
   //Criterio: 
+
   switch (vad_data->state) {
   //Estado inicial -> servirá para ver cual es la potencia de ruido
   //Desde la primera trama ya estaremos en silencio
   case ST_INIT:
-    vad_data->state = ST_SILENCE;
+    if(vad_data->last_feature<f.p){
+      vad_data->k0 = f.p;
+      if(f.p > vad_data->last_feature+5){
+        vad_data->k1 = vad_data->k0 + (f.p - vad_data->last_feature)-2;
+        vad_data->k2 = vad_data->k1 + 5;
+        vad_data->state = ST_SILENCE;
+      }
+    }
+    vad_data->p0 = f.p;
     break;
   //Lo que más info nos da es la potencia
   //Característica: silencio tiene menos potencia que voz
   //f.p --> feature (de potencia)
   //Si f.p es mayor que 0.95, decido que lo que tengo es potencia
   case ST_SILENCE:
-    if (f.p > -40)
-      vad_data->state = ST_VOICE;
+    if (f.p > vad_data->k1 + vad_data->alpha0)
+      vad_data->state = ST_MV;
     break;
 
-  case ST_VOICE:
-    if (f.p < -40)
+  case ST_MV:
+    vad_data->time += FRAME_TIME;
+    if(f.p > vad_data->k1 && vad_data->time > 50){
       vad_data->state = ST_SILENCE;
+      vad_data->time = 0;
+    }else if(f.p > vad_data->k2){
+      vad_data->state = ST_VOICE;
+      vad_data->time = 0;
+    }
     break;
+
+
+  case ST_VOICE:
+    if (f.p < vad_data->k2)
+      vad_data->state = ST_MS;
+    break;
+
+  case ST_MS:
+    vad_data->time += FRAME_TIME;
+    if(f.p < vad_data->k2 && vad_data->time > 50){
+      vad_data->state = ST_VOICE;
+      vad_data->time = 0;
+    }else if(f.p < vad_data->k1){
+      vad_data->state = ST_SILENCE;
+      vad_data->time = 0;
+    }
+    break;
+
 
   case ST_UNDEF:
     break;
   }
+
+  vad_data->last_feature = f.p; /* save feature, in case you want to show */
 
   if (vad_data->state == ST_SILENCE ||
       vad_data->state == ST_VOICE)
