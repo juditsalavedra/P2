@@ -3,7 +3,7 @@
 
 #define PI 3.14159265359
 
-/*float compute_power(const float *x, unsigned int N) {
+float compute_power(const float *x, unsigned int N) {
     float pot_num = 1e-12;
     float pot_den = 1e-12;
     float w;
@@ -14,15 +14,15 @@
         pot_den += w*w;
     }
     return 10*log10(pot_num/pot_den);
-}*/
+}
 
-float compute_power(const float *x, unsigned int N) {
+/*float compute_power(const float *x, unsigned int N) {
     float pot = 1e-12;
     for(unsigned int n=0; n<N; n++){
         pot += x[n]*x[n];
     }
     return 10*log10(pot/N);
-}
+}*/
 
 float compute_am(const float *x, unsigned int N) {
     float A = 0;
