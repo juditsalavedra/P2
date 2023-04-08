@@ -1,7 +1,9 @@
 #!/bin/bash
 
 if [ $# != 2 ]; then
-    echo "Usage: $0 alfa0"
+    echo "Usage: $0 alpha0 and alpha1 must be introduced"
+    echo "alpha0 [default:1]"
+    echo "alpha1 [default:10]"
     exit 1
 fi
 # Be sure that this file has execution permissions:

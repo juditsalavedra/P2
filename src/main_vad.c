@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   float *buffer, *buffer_zeros;
   int frame_size;         /* in samples */
   float frame_duration;   /* in seconds */
-  unsigned int t, last_t, last_defined_t; /* in frames */
+  unsigned int t, last_t; /* in frames */
 
   char	*input_wav, *output_vad, *output_wav;
 

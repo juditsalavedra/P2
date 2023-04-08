@@ -38,7 +38,7 @@ const char help_message[] =
 "   -i FILE, --input-wav=FILE   WAVE file for voice activity detection\n"
 "   -o FILE, --output-vad=FILE  Label file with the result of VAD\n"
 "   -w FILE, --output-wav=FILE  WAVE file with silences cleared\n"
-"   -0 FLOAT, --alpha0=FLOAT  Valor del umbral a determinar [default:10]\n"
+"   -0 FLOAT, --alpha0=FLOAT  Valor del umbral a determinar [default:1]\n"
 "   -1 FLOAT, --alpha1=FLOAT  Valor del umbral a determinar [default:10]\n"
 "   -v, --verbose  Show debug information\n"
 "   -h, --help     Show this screen\n"

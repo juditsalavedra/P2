@@ -221,9 +221,14 @@ Ejercicios
 
 - Complete el código de los ficheros de la práctica para implementar un detector de actividad vocal en
   tiempo real tan exacto como sea posible. Tome como objetivo la maximización de la puntuación-F `TOTAL`.
+  
+  Para la implementación del código se han hecho pruebas con distintos valores de ***alpha0*** y ***alpha1*** con el objetivo de maximizar la puntuación `TOTAL`. A partir de lo observado se han determinado los valores por defecto que aparecen al ejecutar el comando cuando no se introduce ningún argumento. Además, también se encuentran en el fichero ***vad.docopt***. Los umbrales usados en relación a la tasa de cruces por cero también se han determinado observando los valores de ZCR para algunas de las señales de la base de datos y nuestra grabación usando el programa de la primera práctica y visualizando los resultados mediante el uso de ***wavesurfer***.
 
 - Inserte una gráfica en la que se vea con claridad la señal temporal, el etiquetado manual y la detección
   automática conseguida para el fichero grabado al efecto. 
+
+  A continuación se muestran las capturas (se ha hecho ampliando los tramos para visualizar bien las etiquetas, ya que en el programa se han etiquetado todas las tramas, excepto las indefinidas, que se han considerado como parte de la siguiente trama: si después de tramas indefinidas hay una trama de silencio, ese conjunto de tramas indefinidas se consideran silencio e igual para el caso de voz).
+  
 
 - Explique, si existen. las discrepancias entre el etiquetado manual y la detección automática.
 
