@@ -83,10 +83,6 @@ int main(int argc, char *argv[]) {
     /* End loop when file has finished (or there is an error) */
     if  ((n_read = sf_read_float(sndfile_in, buffer, frame_size)) != frame_size) break;
 
-    if (sndfile_out != 0) {
-      /* TODO: copy all the samples into sndfile_out */
-      sf_write_float(sndfile_out, buffer, frame_size);
-    }
 
     //Determianmos estado actual del autómata
     state = vad(vad_data, buffer);
@@ -110,6 +106,8 @@ int main(int argc, char *argv[]) {
       /* TODO: go back and write zeros in silence segments */
       if(state == ST_SILENCE){
         sf_write_float(sndfile_out, buffer_zeros, frame_size);
+      }else{
+        sf_write_float(sndfile_out, buffer, frame_size);
       }
     }
   }
