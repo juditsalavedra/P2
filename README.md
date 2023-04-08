@@ -223,19 +223,42 @@ Ejercicios
   tiempo real tan exacto como sea posible. Tome como objetivo la maximización de la puntuación-F `TOTAL`.
   
   Para la implementación del código se han hecho pruebas con distintos valores de ***alpha0*** y ***alpha1*** con el objetivo de maximizar la puntuación `TOTAL`. A partir de lo observado se han determinado los valores por defecto que aparecen al ejecutar el comando cuando no se introduce ningún argumento. Además, también se encuentran en el fichero ***vad.docopt***. Los umbrales usados en relación a la tasa de cruces por cero también se han determinado observando los valores de ZCR para algunas de las señales de la base de datos y nuestra grabación usando el programa de la primera práctica y visualizando los resultados mediante el uso de ***wavesurfer***.
+  
+  &nbsp; &nbsp; <img width="471" alt="image" src="https://user-images.githubusercontent.com/127085765/230739339-6b5ded68-7ab2-420b-bbb0-8a36af76a988.png">
+
 
 - Inserte una gráfica en la que se vea con claridad la señal temporal, el etiquetado manual y la detección
   automática conseguida para el fichero grabado al efecto. 
 
   A continuación se muestran las capturas (se ha hecho ampliando los tramos para visualizar bien las etiquetas, ya que en el programa se han etiquetado todas las tramas, excepto las indefinidas, que se han considerado como parte de la siguiente trama: si después de tramas indefinidas hay una trama de silencio, ese conjunto de tramas indefinidas se consideran silencio e igual para el caso de voz).
+   
+   &nbsp; &nbsp; <img width="957" alt="image" src="https://user-images.githubusercontent.com/127085765/230739369-45169304-008e-48ae-bd2e-dbfad0de08b8.png">
+   &nbsp; &nbsp; <img width="955" alt="image" src="https://user-images.githubusercontent.com/127085765/230739403-491ffc3c-e4fd-47af-a00a-36397bdc485e.png">
+   &nbsp; &nbsp; <img width="957" alt="image" src="https://user-images.githubusercontent.com/127085765/230739429-7ba3fdd5-d09c-4a66-bdbb-a86cf80d5b62.png">
+   &nbsp; &nbsp; <img width="956" alt="image" src="https://user-images.githubusercontent.com/127085765/230739458-66d64c6c-2349-432d-96e9-045395635927.png">
+   &nbsp; &nbsp; <img width="957" alt="image" src="https://user-images.githubusercontent.com/127085765/230739473-03c24cb9-1737-4848-a419-bcd52cda6ad2.png">
+   &nbsp; &nbsp; <img width="957" alt="image" src="https://user-images.githubusercontent.com/127085765/230739485-eb1ade74-b767-4de9-9ea3-437ea7009dcf.png">
+   &nbsp; &nbsp; <img width="464" alt="image" src="https://user-images.githubusercontent.com/127085765/230739509-bfb17ab1-4620-43a0-8f5d-4e9dad6cd0d6.png">
   
 
 - Explique, si existen. las discrepancias entre el etiquetado manual y la detección automática.
+  
+  Hay que tener en cuenta que el etiquedato manual se ha realizado de forma aproximada en función de la forma de onda de la señal de voz, lo escuchado al reproducir los segmentos de la señal y usando los gráficos de potencia y ZCR (tasa de cruces por cero). Si comparamos el manual con la detección automática, vemos que coinciden mucho. A continuación mostramos el resultado obtenido al evaluar la detección automática comparándola con la realizada manualmente:
+  
+  &nbsp; &nbsp;<img width="647" alt="image" src="https://user-images.githubusercontent.com/127085765/230739638-db595862-53bd-4d15-8136-dc99c7dd76f8.png">
+  
+  Como podemos ver, el TOTAL obtenido es muy elevado. Viendo las capturas del apartado anterior, nos fijamos que hay muy pocas tramas identificadas erróneamente. Además observamos que los errores se corresponden con las últimas y las primeras tramas de segmento de voz que se consideran silencio. Estos errores, sin embargo, se pueden producir también al realizar el etiquetado manual, ya que no es evidente el instante en el que termina o empieza exactamente un segmento de voz.
+
 
 - Evalúe los resultados sobre la base de datos `db.v4` con el script `vad_evaluation.pl` e inserte a 
   continuación las tasas de sensibilidad (*recall*) y precisión para el conjunto de la base de datos (sólo
   el resumen).
+  
+  Evaluamos los resultados sobre la base de datos usando `scripts/run_vad.sh $alpha0 $alpha1`, dónde ***alpha0*** y ***alpha1*** son los argumentos que se deben pasar. Hemos elegido los valores a partir de la realización de muchas pruebas y viendo para cuáles se consigue un resultado mejor. Como se puede observar en el resumen, lo mejor que hemos conseguido ha sido un 91.92%:
+ 
+ &nbsp; &nbsp; <img width="669" alt="image" src="https://user-images.githubusercontent.com/127085765/230739964-e78ce3d6-7131-4353-92a3-35d7e5ee025d.png">
 
+ Queremos destacar que la puntuación-F `TOTAL` conseguida para *Voz* es mejor que para *Silence*, hecho importante a tener en cuenta en función de la situación en la que se usa el detector automático. hay casos en los que es mejor confundir silencio por voz que al revés, como sería en el caso de silenciar a las personas que no están hablando en un *meet*.
 
 ### Trabajos de ampliación
 
@@ -249,12 +272,23 @@ Ejercicios
 
 - Si ha usado `docopt_c` para realizar la gestión de las opciones y argumentos del programa `vad`, inserte
   una captura de pantalla en la que se vea el mensaje de ayuda del programa.
+  
+  Hemos usado `docopt_c` para gestionar los valores de ***alpha0*** y ***alpha1***. De este modo, el usuario puede ejecutar el programa probando con distintos valores de ***alpha*** y ver los resultados obtenidos para cada uno de ellos. Puede ser interesante observar que dependiendo de la señal de voz, puede ser mejor usar unos valores de ***alpha*** más elevados (si la potencia de ruido es baja y la voz tiene potencia muy elevada) o más bajos (si se trata de una señal de voz en la que el hablante hablaba bajo o la potencia de error era bastante notable). Estos factores se tienen que tener en cuenta porque afectan a la detección de voz.
+  El mensaje de ayuda del programa es:
+  
+  &nbsp; &nbsp; <img width="567" alt="image" src="https://user-images.githubusercontent.com/127085765/230740142-1c02d604-ac2f-47b7-be9e-160b2dd56564.png">
+
+  Como se muestra a ontinuación sale el mensaje que hemos determinado en el fichero `vad_docopt`:
+  &nbsp; &nbsp; <img width="512" alt="image" src="https://user-images.githubusercontent.com/127085765/230740342-3add5a10-3942-4724-b65c-136808b34671.png">
 
 
 ### Contribuciones adicionales y/o comentarios acerca de la práctica
 
 - Indique a continuación si ha realizado algún tipo de aportación suplementaria (algoritmos de detección o 
   parámetros alternativos, etc.).
+  
+  Como se ha indicado en el enunciado de la práctica, a parte de la potencia, también hya otros parámetros. Hemos decidido usar los valores de la tasa de cruces por cero como condición para determinar si una trama es Voz o Silencio. 
+  Además, como se nos ha indicado en el pdf, hemos decidido que las N primeras tramas de la señal se considere como estado ST_INIT y se han usado para calcular el nivel de potencia del silencio k0.
 
 - Si lo desea, puede realizar también algún comentario acerca de la realización de la práctica que
   considere de interés de cara a su evaluación.
