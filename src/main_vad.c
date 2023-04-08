@@ -97,16 +97,13 @@ int main(int argc, char *argv[]) {
     //Sabemos que el segemento anterior era voz o silencio pk hay un cambio de estado
     if (state != last_state) {
       if (t != last_t){
-        if(last_state == ST_UNDEF && state == ST_SILENCE){
-          fprintf(vadfile, "%.5f\t%.5f\t%s\n", last_t * frame_duration, t * frame_duration, state2str(ST_SILENCE));
-        }else if(last_state == ST_UNDEF && state == ST_VOICE){
-          fprintf(vadfile, "%.5f\t%.5f\t%s\n", last_t * frame_duration, t * frame_duration, state2str(ST_VOICE));
-        }else{
-          fprintf(vadfile, "%.5f\t%.5f\t%s\n", last_t * frame_duration, t * frame_duration, state2str(last_state));
+        if(state != ST_UNDEF){
+          fprintf(vadfile, "%.5f\t%.5f\t%s\n", last_t * frame_duration, (t) * frame_duration, state2str(state));
+          last_defined_state = state;
+          last_t = t;
         }
       }
-      last_state = state;
-      last_t = t;
+
     }
 
     if (sndfile_out != 0) {

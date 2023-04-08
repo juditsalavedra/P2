@@ -6,7 +6,7 @@
 #include "pav_analysis.h"
 
 const float FRAME_TIME = 10.0F; /* in ms. */
-const float N = 30;
+const float N = 5;
 const float fm = 16000;
 int n = 0;
 
@@ -115,7 +115,6 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
       vad_data->p0 = f.p;
       vad_data->k1 = vad_data->k0 + vad_data->alpha0;
       vad_data->k2 = vad_data->k1 + vad_data->alpha1;
-      printf("Valor k0: %.2f\n\n", vad_data->k0);
     }
   
     break;
@@ -124,45 +123,40 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
   //Lo que más info nos da es la potencia
   //Característica: silencio tiene menos potencia que voz
   //f.p --> feature (de potencia)
-  //Si f.p es mayor que 0.95, decido que lo que tengo es potencia
+
   case ST_SILENCE:
-    if (f.p > vad_data->k1){
+    if (f.p > vad_data->k1 || f.zcr > 1500){
       vad_data->state = ST_MV;
       vad_data->time = 0;
     }
-    printf("S    ");
     break;
 
   case ST_VOICE:
-  
-    if(f.p<vad_data->k2){
+    if(f.p<vad_data->k2 && f.zcr<1800){
       vad_data->state = ST_MS;
       vad_data->time = 0;
     }  
-          printf("V    ");
     break;
 
   case ST_MV:
-    if(f.p > vad_data->k2){
-      vad_data->state = ST_VOICE;
-      vad_data->time = 0;
-    }else if(f.p < vad_data->k1 || (f.p > vad_data->k1 && vad_data->time > vad_data->tMAX)){
+    if((f.p > vad_data->k1 && vad_data->time > 30) || f.p < vad_data->k1){
       vad_data->state = ST_SILENCE;
       vad_data->time = 0;
+    }else if(f.p > vad_data->k2 || f.zcr >1800){
+      vad_data->state = ST_VOICE;
+      vad_data->time = 0;
     }
-    printf("MV   ");
-    //Si es més gran que k1 durant t<tMAX i més petit que k2 es manté a Maybe Voice
+
     break;
 
   case ST_MS:
     if(f.p < vad_data->k1){
       vad_data->state = ST_SILENCE;
       vad_data->time = 0;
-    }else if(f.p < vad_data->k2 && vad_data->time < vad_data->tMAX){
+    }else if((f.p > vad_data->k1 && vad_data->time < 30)||f.zcr>1800){
       vad_data->state = ST_VOICE;
       vad_data->time = 0;
     }
-    printf("MS   ");
     break;
 
 
@@ -171,7 +165,6 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
   }
 
   vad_data->last_feature = f.p; /* save feature, in case you want to show */
-  printf("Valor f.p: %.2f\n", vad_data->last_feature);
 
   if (vad_data->state == ST_SILENCE ||
       vad_data->state == ST_VOICE)
