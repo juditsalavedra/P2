@@ -267,6 +267,15 @@ Ejercicios
 - Si ha desarrollado el algoritmo para la cancelación de los segmentos de silencio, inserte una gráfica en
   la que se vea con claridad la señal antes y después de la cancelación (puede que `wavesurfer` no sea la
   mejor opción para esto, ya que no es capaz de visualizar varias señales al mismo tiempo).
+  
+  
+  ![image](https://user-images.githubusercontent.com/125377500/230802373-5201b4df-551c-4301-a704-c7fc9edf9169.png)
+
+  
+  
+  
+  
+  
 
 #### Gestión de las opciones del programa usando `docopt_c`
 
