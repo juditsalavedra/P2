@@ -18,9 +18,9 @@ int main(int argc, char *argv[]) {
   int n_read = 0, i;
 
   VAD_DATA *vad_data;
-  VAD_STATE state, last_state, last_defined_state;
+  VAD_STATE state, last_state;
 
-  float *buffer, *buffer_zeros;
+  float *buffer, *buffer_zeros, *buffer_save;
   int frame_size;         /* in samples */
   float frame_duration;   /* in seconds */
   unsigned int t, last_t; /* in frames */
@@ -74,10 +74,13 @@ int main(int argc, char *argv[]) {
   frame_size   = vad_frame_size(vad_data);
   buffer       = (float *) malloc(frame_size * sizeof(float));
   buffer_zeros = (float *) malloc(frame_size * sizeof(float));
+  buffer_save       = (float *) malloc(frame_size * sizeof(float));
   for (i=0; i< frame_size; ++i) buffer_zeros[i] = 0.0F;
 
   frame_duration = (float) frame_size/ (float) sf_info.samplerate;
   last_state = ST_UNDEF;
+
+  unsigned int n = 0;
 
   for (t = last_t = 0; ; t++) { /* For each frame ... */
     /* End loop when file has finished (or there is an error) */
@@ -91,25 +94,45 @@ int main(int argc, char *argv[]) {
     /* TODO: print only SILENCE and VOICE labels */
     /* As it is, it prints UNDEF segments but is should be merge to the proper value */
     //Sabemos que el segemento anterior era voz o silencio pk hay un cambio de estado
-    if (state != last_state) {
+    
       if (t != last_t){
         if(state != ST_UNDEF){
           fprintf(vadfile, "%.5f\t%.5f\t%s\n", last_t * frame_duration, (t) * frame_duration, state2str(state));
-          last_defined_state = state;
           last_t = t;
         }
       }
 
-    }
+  //last_state = state;
 
     if (sndfile_out != 0) {
       /* TODO: go back and write zeros in silence segments */
       if(state == ST_SILENCE){
+        if(last_state == ST_UNDEF){
+          for(unsigned int i = 0; i<n; i++){
+            sf_write_float(sndfile_out, buffer_zeros, frame_size);
+          }
+          n=0;
+        }
         sf_write_float(sndfile_out, buffer_zeros, frame_size);
-      }else{
+      }else if(state == ST_VOICE){
+        if(last_state == ST_UNDEF){
+          for(unsigned int i = 0; i<n; i++){
+            sf_write_float(sndfile_out, buffer_save, frame_size);
+          }
+          n=0;
+        }
         sf_write_float(sndfile_out, buffer, frame_size);
+      }else{
+        if(n!=0){
+          buffer_save = (float *) realloc(buffer_save, i*frame_size * sizeof(float));
+        }
+         for(unsigned int i = 0; i<frame_size; i++){
+          buffer_save[i+n*frame_size]=buffer[i];
+         }
+        n++;
       }
     }
+    last_state = state;
   }
 
   state = vad_close(vad_data);
