@@ -222,6 +222,8 @@ Ejercicios
 - Complete el código de los ficheros de la práctica para implementar un detector de actividad vocal en
   tiempo real tan exacto como sea posible. Tome como objetivo la maximización de la puntuación-F `TOTAL`.
   
+  En primer lugar, queremos indicar que para la implementación del detector de actividad vocal hemos usado la función del cálculo de la potencia de la práctica 1 sin la ventana de Hamming por si dicha ampliación no estaba bien implementada. Aunque en la primera parte se muestre el plot de la potencia medida usando ventana de Hamming, al empezar esta parte de la práctica no se ha usado (se pude ver en el fichero ***pav_analysis.c***)
+  
   Para la implementación del código se han hecho pruebas con distintos valores de ***alpha0*** y ***alpha1*** con el objetivo de maximizar la puntuación `TOTAL`. A partir de lo observado se han determinado los valores por defecto que aparecen al ejecutar el comando cuando no se introduce ningún argumento. Además, también se encuentran en el fichero ***vad.docopt***. Los umbrales usados en relación a la tasa de cruces por cero también se han determinado observando los valores de ZCR para algunas de las señales de la base de datos y nuestra grabación usando el programa de la primera práctica y visualizando los resultados mediante el uso de ***wavesurfer***.
   
   &nbsp; &nbsp; <img width="471" alt="image" src="https://user-images.githubusercontent.com/127085765/230739339-6b5ded68-7ab2-420b-bbb0-8a36af76a988.png">
@@ -270,18 +272,18 @@ Ejercicios
   
   La señal antes de la cancelación de ruido es la siguiente:
   
-  ![image](https://user-images.githubusercontent.com/125377500/230802373-5201b4df-551c-4301-a704-c7fc9edf9169.png)
+  &nbsp; &nbsp; <img width="958" alt="image" src="https://user-images.githubusercontent.com/127085765/230867688-f57492df-a3c2-4b40-9c6b-dfaaf421a74a.png">
+  
   Se observan pequeñas oscilaciones en los silencios debido al ruido, siendo especialmente destacables los cambios de amplitud en el inicio de la señal.
   
   El resultado al asignar ceros a los silencios es el siguiente:
   
-  ![image](https://user-images.githubusercontent.com/125377500/230802624-b5df6935-e549-4c4c-a92d-4aba10784b7f.png)
+  &nbsp; &nbsp; <img width="956" alt="image" src="https://user-images.githubusercontent.com/127085765/230867592-c43fae29-6806-418f-89fb-ea6cc2c75ab0.png">
   
   Se han puesto a cero todas las zonas detectadas como silencio.
  
-Por otro lado, cuando se reproduce el audio "pav_2352zeros" se escuchan todos los segmentos de voz casi de manera completa (menos por un cierto error que se        produce en la detección) y los pequeños ruidos en las zonas de silencios entre palabras quedan completamente eliminados.
+Por otro lado, cuando se reproduce el audio "pav_2352_S.wav" se escuchan todos los segmentos de voz casi de manera completa (menos por un cierto error que se        produce en la detección) y los pequeños ruidos en las zonas de silencios entre palabras quedan completamente eliminados.
  
-  
   
   
 
@@ -304,8 +306,8 @@ Por otro lado, cuando se reproduce el audio "pav_2352zeros" se escuchan todos lo
 - Indique a continuación si ha realizado algún tipo de aportación suplementaria (algoritmos de detección o 
   parámetros alternativos, etc.).
   
-  Como se ha indicado en el enunciado de la práctica, a parte de la potencia, también hya otros parámetros. Hemos decidido usar los valores de la tasa de cruces por cero como condición para determinar si una trama es Voz o Silencio. 
-  Además, como se nos ha indicado en el pdf, hemos decidido que las N primeras tramas de la señal se considere como estado ST_INIT y se han usado para calcular el nivel de potencia del silencio k0.
+  Como se ha indicado en el enunciado de la práctica, a parte de la potencia, también hay otros parámetros. Hemos decidido usar los valores de la tasa de cruces por cero como condición para determinar si una trama es Voz o Silencio. 
+  Además, como se nos ha indicado en el pdf, hemos decidido que las N primeras tramas de la señal se consideren como estado ST_INIT y se han usado para calcular el nivel de potencia del silencio k0.
 
 - Si lo desea, puede realizar también algún comentario acerca de la realización de la práctica que
   considere de interés de cara a su evaluación.
