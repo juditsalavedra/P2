@@ -306,8 +306,8 @@ Por otro lado, cuando se reproduce el audio "pav_2352_S.wav" se escuchan todos l
 - Indique a continuación si ha realizado algún tipo de aportación suplementaria (algoritmos de detección o 
   parámetros alternativos, etc.).
   
-  Como se ha indicado en el enunciado de la práctica, a parte de la potencia, también hya otros parámetros. Hemos decidido usar los valores de la tasa de cruces por cero como condición para determinar si una trama es Voz o Silencio. 
-  Además, como se nos ha indicado en el pdf, hemos decidido que las N primeras tramas de la señal se considere como estado ST_INIT y se han usado para calcular el nivel de potencia del silencio k0.
+  Como se ha indicado en el enunciado de la práctica, a parte de la potencia, también hay otros parámetros. Hemos decidido usar los valores de la tasa de cruces por cero como condición para determinar si una trama es Voz o Silencio. 
+  Además, como se nos ha indicado en el pdf, hemos decidido que las N primeras tramas de la señal se consideren como estado ST_INIT y se han usado para calcular el nivel de potencia del silencio k0.
 
 - Si lo desea, puede realizar también algún comentario acerca de la realización de la práctica que
   considere de interés de cara a su evaluación.
