@@ -268,11 +268,16 @@ Ejercicios
   la que se vea con claridad la señal antes y después de la cancelación (puede que `wavesurfer` no sea la
   mejor opción para esto, ya que no es capaz de visualizar varias señales al mismo tiempo).
   
+  La señal antes de la cancelación de ruido es la siguiente:
   
   ![image](https://user-images.githubusercontent.com/125377500/230802373-5201b4df-551c-4301-a704-c7fc9edf9169.png)
-
+  Se observan pequeñas oscilaciones en los silencios debido al ruido y es especialmente destacable el inicio de la señal.
   
+  El resultado al asignar ceros a los silencios es el siguiente:
+  ![image](https://user-images.githubusercontent.com/125377500/230802624-b5df6935-e549-4c4c-a92d-4aba10784b7f.png)
   
+  Por otro lado, cuando se reproduce el audio "pav_2352zeros" se escuchan todos los segmentos de voz casi de manera completa (menos por un cierto error que se           produce en la detección) y los pequeños ruidos en las zonas de silencios entre palabras quedan completamente eliminados.
+ 
   
   
   
