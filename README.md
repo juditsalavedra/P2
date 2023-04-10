@@ -222,7 +222,8 @@ Ejercicios
 - Complete el código de los ficheros de la práctica para implementar un detector de actividad vocal en
   tiempo real tan exacto como sea posible. Tome como objetivo la maximización de la puntuación-F `TOTAL`.
   
-  En primer lugar, queremos inidcar que para la implementación del detector de actividad vocal hemos usado la función del cálculo de la potencia de la práctica 1 sin la ventana de Hamming por si dicha ampliación no estaba bien implementada. Aunque en la primera parte se muestre el plot de la potencia medida usando ventana de Hamming, al empezar esta parte de la práctica no se ha usado (se pude ver en el fichero ***pav_analysis.c***)
+  En primer lugar, queremos indicar que para la implementación del detector de actividad vocal hemos usado la función del cálculo de la potencia de la práctica 1 sin la ventana de Hamming por si dicha ampliación no estaba bien implementada. Aunque en la primera parte se muestre el plot de la potencia medida usando ventana de Hamming, al empezar esta parte de la práctica no se ha usado (se pude ver en el fichero ***pav_analysis.c***)
+  
   Para la implementación del código se han hecho pruebas con distintos valores de ***alpha0*** y ***alpha1*** con el objetivo de maximizar la puntuación `TOTAL`. A partir de lo observado se han determinado los valores por defecto que aparecen al ejecutar el comando cuando no se introduce ningún argumento. Además, también se encuentran en el fichero ***vad.docopt***. Los umbrales usados en relación a la tasa de cruces por cero también se han determinado observando los valores de ZCR para algunas de las señales de la base de datos y nuestra grabación usando el programa de la primera práctica y visualizando los resultados mediante el uso de ***wavesurfer***.
   
   &nbsp; &nbsp; <img width="471" alt="image" src="https://user-images.githubusercontent.com/127085765/230739339-6b5ded68-7ab2-420b-bbb0-8a36af76a988.png">
