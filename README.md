@@ -270,18 +270,18 @@ Ejercicios
   
   La señal antes de la cancelación de ruido es la siguiente:
   
-  ![image](https://user-images.githubusercontent.com/125377500/230802373-5201b4df-551c-4301-a704-c7fc9edf9169.png)
+  &nbsp; &nbsp; <img width="958" alt="image" src="https://user-images.githubusercontent.com/127085765/230867688-f57492df-a3c2-4b40-9c6b-dfaaf421a74a.png">
+  
   Se observan pequeñas oscilaciones en los silencios debido al ruido, siendo especialmente destacables los cambios de amplitud en el inicio de la señal.
   
   El resultado al asignar ceros a los silencios es el siguiente:
   
-  ![image](https://user-images.githubusercontent.com/125377500/230802624-b5df6935-e549-4c4c-a92d-4aba10784b7f.png)
+  &nbsp; &nbsp; <img width="956" alt="image" src="https://user-images.githubusercontent.com/127085765/230867592-c43fae29-6806-418f-89fb-ea6cc2c75ab0.png">
   
   Se han puesto a cero todas las zonas detectadas como silencio.
  
-Por otro lado, cuando se reproduce el audio "pav_2352zeros" se escuchan todos los segmentos de voz casi de manera completa (menos por un cierto error que se        produce en la detección) y los pequeños ruidos en las zonas de silencios entre palabras quedan completamente eliminados.
+Por otro lado, cuando se reproduce el audio "pav_2352_S.wav" se escuchan todos los segmentos de voz casi de manera completa (menos por un cierto error que se        produce en la detección) y los pequeños ruidos en las zonas de silencios entre palabras quedan completamente eliminados.
  
-  
   
   
 
